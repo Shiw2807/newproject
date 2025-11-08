@@ -1,10 +1,14 @@
 from fastapi import FastAPI
 import asyncio
 from app.api.routes import router
+from app.api.policies_routes import router as policies_router
+from app.api.admin_routes import router as admin_router
 from app.workers.sync_worker import run_sync_worker
 
 app = FastAPI(title="Permissions Service")
 app.include_router(router)
+app.include_router(policies_router)
+app.include_router(admin_router)
 
 _stop_event: asyncio.Event | None = None
 _worker_task: asyncio.Task | None = None
